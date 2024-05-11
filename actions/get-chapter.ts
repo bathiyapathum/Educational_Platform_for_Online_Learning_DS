@@ -14,15 +14,15 @@ export const getChapter = async ({
   chapterId,
 }: GetChapterProps) => {
   try {
-    console.log("chapter");
-    const purchase = await db.purchase.findUnique({
-      where: {
-        userId_courseId: {
-          userId,
-          courseId,
-        },
-      },
-    });
+    // console.log("chapter");
+    // const purchase = await db.purchase.findUnique({
+    //   where: {
+    //     userId_courseId: {
+    //       userId,
+    //       courseId,
+    //     },
+    //   },
+    // });
 
     const response = await axios.get(`http://localhost:3003/api`, {
       params: {
@@ -31,7 +31,7 @@ export const getChapter = async ({
       },
     });
 
-    // const purchase = response.data;
+    const purchase = response.data;
     console.log({ Dilaaaan: purchase });
 
     const course = await db.course.findUnique({
