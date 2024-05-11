@@ -1,0 +1,2 @@
+npx prisma generate
+npm install express @prisma/client
