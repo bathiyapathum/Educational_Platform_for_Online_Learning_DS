@@ -2,7 +2,7 @@ import { Category, Course } from "@prisma/client";
 
 import { getProgress } from "@/actions/get-progress";
 import { db } from "@/lib/db";
-import axios from 'axios'
+import axios from "axios";
 
 type CourseWithProgressWithCategory = Course & {
   category: Category | null;
@@ -14,12 +14,12 @@ type GetCourses = {
   userId: string;
   title?: string;
   categoryId?: string;
-}
+};
 
 export const getCourses = async ({
   userId,
   title,
-  categoryId
+  categoryId,
 }: GetCourses): Promise<CourseWithProgressWithCategory[]> => {
   try {
     // return [
@@ -90,25 +90,21 @@ export const getCourses = async ({
     //   })
     // );
 
-
     // return courseWithProgress;
-
 
     const response = await axios.get("http://localhost:3001/api", {
       params: {
         userId: userId,
         title: title,
-        categoryId: categoryId
-      }
-    })
+        categoryId: categoryId,
+      },
+    });
 
-    console.log("course")
+    console.log("course");
 
-    return response.data
-
-    
+    return response.data;
   } catch (error) {
     console.log("[GET_COURSES]", error);
     return [];
   }
-}
+};
