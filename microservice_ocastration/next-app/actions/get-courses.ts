@@ -94,7 +94,7 @@ export const getCourses = async ({
     // return courseWithProgress;
 
 
-    const response = await axios.get("http://localhost:3001/api", {
+    const response = await axios.get("http://courseservice:3001/api", {
       params: {
         userId: userId,
         title: title,
