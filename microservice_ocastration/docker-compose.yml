@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  courseservice:
+    build:
+      context: ./backend-course
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+
+  categoryservice:
+    build:
+      context: ./backend-category
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+
+  paymentservice:
+    build:
+      context: ./backend-payment
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+
+  nextappservice:
+    build:
+      context: ./next-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - courseservice
+      - categoryservice
+      - paymentservice

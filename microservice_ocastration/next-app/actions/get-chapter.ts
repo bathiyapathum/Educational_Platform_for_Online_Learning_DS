@@ -24,7 +24,7 @@ export const getChapter = async ({
     //   },
     // });
 
-    const response = await axios.get(`http://localhost:3003/api`, {
+    const response = await axios.get(`http://paymentservice:3003/api`, {
       params: {
         userId,
         courseId,
