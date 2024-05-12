@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
+import axios from "axios";
 import { NextResponse } from "next/server";
-import fetch from "node-fetch";
 
 export async function POST(
   req: Request,
@@ -23,23 +23,12 @@ export async function POST(
       });
     }
 
-    // Check if the user owns the course
-    const courseOwnerResponse = await fetch(
-      "http://localhost:3004/api/is-course-owner",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.CLERK_API_KEY}`,
-        },
-        body: JSON.stringify({
-          userId,
-          courseId: params.courseId,
-        }),
-      }
-    );
-
-    const courseOwner = await courseOwnerResponse.json();
+    const courseOwner = await db.course.findUnique({
+      where: {
+        id: params.courseId,
+        userId: userId,
+      },
+    });
 
     if (!courseOwner) {
       return new NextResponse("Unauthorized", {
@@ -58,17 +47,19 @@ export async function POST(
 
     const newPosition = lastChapter ? lastChapter.position + 1 : 1;
 
-    const chapter = await db.chapter.create({
-      data: {
-        title,
-        courseId: params.courseId,
-        position: newPosition,
-      },
+    // Send a POST request to the backend server to create the chapter
+    const response = await axios.post("http://localhost:3004/api", {
+      title,
+      courseId: params.courseId,
+      position: newPosition,
     });
 
-    return NextResponse.json(chapter);
+    // Return the response from the backend server
+    return new NextResponse(response.data, {
+      status: response.status,
+    });
   } catch (error) {
-    console.log("[CHAPTERS]", error);
+    console.log("[CHAPTERS", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

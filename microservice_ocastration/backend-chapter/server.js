@@ -6,23 +6,27 @@ const db = require("./lib/Db.js");
 
 app.use(express.json());
 
-// Endpoint to check if the user owns the course
+// Endpoint to create a new chapter
 app.post("/api", async (req, res) => {
+  const { title, courseId, position } = req.body;
+
   try {
-    const { userId, courseId } = req.body;
+    const chapter = await db.chapter.create({
+      data: {
+        title,
+        courseId,
+        position,
+      },
+    });
 
-    // Assuming you have a function in your Db module to check if the user owns the course
-    const isCourseOwner = await db.checkCourseOwnership(userId, courseId);
-
-    // You can modify this response as per your data structure
-    res.json({ isCourseOwner });
+    // Send a success response with the created chapter
+    res.status(201).json({ chapter });
   } catch (error) {
-    console.error("Error checking course ownership:", error);
+    console.error("Error creating chapter:", error);
+    // Send an error response if something goes wrong
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-// Other endpoints and server setup can follow here
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
