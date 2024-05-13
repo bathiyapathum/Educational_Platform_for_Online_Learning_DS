@@ -16,7 +16,16 @@ app.use((req, res, next) => {
 });
 
 app.get("/api", async (req, res) => {
-  res.send([{ id: "005", name: "Hotel Management" },{ id: "003", name: "music" }]);
+  try {
+    const categories = await db.category.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
+    res.send(categories);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(PORT, () => {
