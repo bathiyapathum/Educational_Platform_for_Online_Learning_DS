@@ -35,6 +35,27 @@ app.get("/api", async (req, res) => {
   res.send(purchase);
 });
 
+//make course purchased
+app.post("/api/make-purchase", async (req, res) => {
+  const { userId, courseId } = req.body;
+
+  console.log("userId", userId);
+  console.log("courseId", courseId);
+
+  try {
+    const purchase = await db.purchase.create({
+      data: {
+        userId,
+        courseId,
+      },
+    });
+    res.status(200).json({ message: "Purchase successful" });
+  } catch (error) {
+    console.error("Error making purchase:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
