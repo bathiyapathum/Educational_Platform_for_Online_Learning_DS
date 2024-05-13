@@ -88,7 +88,7 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   };
 
   return (
-    <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="relative mt-6 border bg-blue-100 rounded-md p-4">
       {isUpdating && (
         <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-md flex items-center justify-center">
           <Loader2 className="animate-spin h-6 w-6 text-sky-700" />
@@ -123,13 +123,18 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
                       disabled={isSubmitting}
                       placeholder="e.g 'Introduce to the course'"
                       {...field}
+                      className="bg-blue-50"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button disabled={!isValid || isSubmitting} type="submit">
+            <Button
+              disabled={!isValid || isSubmitting}
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-600"
+            >
               Save
             </Button>
           </form>
