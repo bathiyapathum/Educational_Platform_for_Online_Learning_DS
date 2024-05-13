@@ -6,6 +6,13 @@ const db = require("./lib/Db.js");
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  const timestamp = new Date()?.toISOString();
+  const ip = req?.ip || req?.connection?.remoteAddress;
+  console.log(`[${timestamp}] | ${ip} | ${req?.method} ${req?.path}`);
+  next();
+});
+
 // Endpoint to create a new chapter
 app.post("/api", async (req, res) => {
   const { title, courseId, position } = req.body;

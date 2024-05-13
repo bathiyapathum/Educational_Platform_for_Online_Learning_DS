@@ -9,13 +9,23 @@ const { getProgress } = require("./lib/GetProgress.js");
 app.use(express.json());
 
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  // we need to call next in order to proceed with the application.
+  const timestamp = new Date()?.toISOString();
+  const ip = req?.ip || req?.connection?.remoteAddress;
+  console.log(`[${timestamp}] | ${ip} | ${req?.method} ${req?.path}`);
   next();
 });
 
 app.get("/api", async (req, res) => {
-  res.send([{ id: "005", name: "Hotel Management" },{ id: "003", name: "music" }]);
+  try {
+    const categories = await db.category.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
+    res.send(categories);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(PORT, () => {
