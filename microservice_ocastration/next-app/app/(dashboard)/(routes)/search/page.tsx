@@ -24,7 +24,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     }
 
     //TODO: Create backend to get categories
-    const categories = await axios.get("http://localhost:3002/api");
+    const categories = await axios.get("http://categoryservice:3002/api");
 
     // const categories = await db.category.findMany({
     //   orderBy: {

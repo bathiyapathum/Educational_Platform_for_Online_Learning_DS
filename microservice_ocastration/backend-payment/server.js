@@ -8,6 +8,12 @@ const { getProgress } = require("./lib/GetProgress.js");
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  // we need to call next in order to proceed with the application.
+  next();
+});
+
 app.get("/api", async (req, res) => {
   const { userId, courseId } = req.query;
 
