@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ColumnDef,
@@ -9,11 +9,11 @@ import {
   getFilteredRowModel,
   useReactTable,
   getSortedRowModel,
-  getPaginationRowModel
-} from "@tanstack/react-table"
-import { useState } from "react"
-import Link from "next/link"
-import { PlusCircle } from "lucide-react"
+  getPaginationRowModel,
+} from "@tanstack/react-table";
+import { useState } from "react";
+import Link from "next/link";
+import { PlusCircle } from "lucide-react";
 
 import {
   Table,
@@ -22,21 +22,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -49,12 +49,12 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
-      columnFilters
+      columnFilters,
     },
-  })
+  });
 
   return (
-    <div>      
+    <div>
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter courses..."
@@ -62,16 +62,16 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm bg-blue-50"
         />
         <Link href="/teacher/create">
-          <Button>
+          <Button className="bg-blue-600">
             <PlusCircle className="h-4 w-4 mr-2" />
             New course
           </Button>
         </Link>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border bg-blue-50">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -82,11 +82,11 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -100,14 +100,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -121,6 +127,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          className="bg-blue-100"
         >
           Previous
         </Button>
@@ -129,10 +136,11 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          className="bg-blue-200"
         >
           Next
         </Button>
       </div>
     </div>
-  )
+  );
 }

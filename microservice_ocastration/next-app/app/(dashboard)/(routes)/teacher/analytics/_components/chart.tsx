@@ -1,12 +1,6 @@
-"use client"
+"use client";
 
-import {
-  ResponsiveContainer,
-  BarChart,
-  XAxis,
-  YAxis,
-  Bar
-} from "recharts"
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from "recharts";
 
 import { Card } from "@/components/ui/card";
 
@@ -14,16 +8,14 @@ interface ChartProps {
   data: {
     name: string;
     total: number;
-  }[]
+  }[];
 }
 
-export const Chart = ({
-  data,
-}: ChartProps) => {
+export const Chart = ({ data }: ChartProps) => {
   return (
-    <Card>
+    <Card className="bg-blue-50">
       <ResponsiveContainer width="100%" height={350}>
-        <BarChart data={data} >
+        <BarChart data={data}>
           <XAxis
             dataKey="name"
             stroke="#88888"
@@ -36,15 +28,11 @@ export const Chart = ({
             fontSize={12}
             tickLine={false}
             axisLine={false}
-            tickFormatter={value => `${value}`}
+            tickFormatter={(value) => `${value}`}
           />
-          <Bar
-            dataKey="total"
-            fill="#0369a1"
-            radius={[4, 4, 0, 0]}
-          />
+          <Bar dataKey="total" fill="#0369a1" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </Card>
-  )
-}
+  );
+};

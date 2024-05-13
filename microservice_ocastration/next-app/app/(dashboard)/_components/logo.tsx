@@ -10,7 +10,7 @@ export const Logo = () => {
         height={40}
         className="rounded-full"
       />
-      <span>Udemy Clone</span>
+      <span>KnowlegdeHub</span>
     </div>
   );
-}
+};

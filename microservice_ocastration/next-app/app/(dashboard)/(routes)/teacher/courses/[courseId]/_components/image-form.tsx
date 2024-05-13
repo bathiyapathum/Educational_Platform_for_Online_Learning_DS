@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as z from "zod";
 import axios from "axios";
@@ -19,14 +19,14 @@ interface ImageFormProps {
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
-    message: "Image is required"
-  })
-})
+    message: "Image is required",
+  }),
+});
 
 export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const [isEditting, setIsEditting] = useState(false);
 
-  const toggleEdit = () => setIsEditting(current => !current);
+  const toggleEdit = () => setIsEditting((current) => !current);
 
   const router = useRouter();
 
@@ -37,27 +37,23 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong")
+      toast.error("Something went wrong");
     }
-  }
+  };
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border bg-blue-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course Image
         <Button onClick={toggleEdit} variant="ghost">
-          {isEditting && (
-            <div className="text-red-500">Cancel</div>
-          )}
+          {isEditting && <div className="text-red-500">Cancel</div>}
 
-          {
-            !isEditting && !initialData.imageUrl && (
-              <>
-                <PlusCircle className="h-4 w-4 mr-2" />
-                Add an image
-              </>
-            )
-          }
+          {!isEditting && !initialData.imageUrl && (
+            <>
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Add an image
+            </>
+          )}
 
           {!isEditting && initialData.imageUrl && (
             <>
@@ -67,43 +63,38 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           )}
         </Button>
       </div>
-      {
-        !isEditting && (
-          !initialData.imageUrl ? (
-            <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
-              <ImageIcon className="h-10 w-10 text-slate500" />
-            </div>
-          ) : (
-            <div className="relative aspect-video mt-2">
-              <Image
-                alt="Upload"
-                fill
-                className="object-cover roundedmd"
-                src={initialData.imageUrl}
-              />
-              current image
-            </div>
-          )
-        )
-      }
-
-      {
-        isEditting && (
-          <div>
-            <FileUpload
-              endPoint="courseImage"
-              onChange={(url) => {
-                if (url) {
-                  onSubmit({ imageUrl: url })
-                }
-              }}
-            />
-            <div className="text-xs text-muted-foreground mt-4">
-              16:9 aspect ratio recommended
-            </div>
+      {!isEditting &&
+        (!initialData.imageUrl ? (
+          <div className="flex items-center justify-center h-60 bg-blue-50 rounded-md">
+            <ImageIcon className="h-10 w-10 text-blue-500" />
           </div>
-        )
-      }
+        ) : (
+          <div className="relative aspect-video mt-2">
+            <Image
+              alt="Upload"
+              fill
+              className="object-cover roundedmd"
+              src={initialData.imageUrl}
+            />
+            current image
+          </div>
+        ))}
+
+      {isEditting && (
+        <div>
+          <FileUpload
+            endPoint="courseImage"
+            onChange={(url) => {
+              if (url) {
+                onSubmit({ imageUrl: url });
+              }
+            }}
+          />
+          <div className="text-xs text-muted-foreground mt-4">
+            16:9 aspect ratio recommended
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
