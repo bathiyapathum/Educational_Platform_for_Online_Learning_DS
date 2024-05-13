@@ -9,8 +9,9 @@ const { getProgress } = require("./lib/GetProgress.js");
 app.use(express.json());
 
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  // we need to call next in order to proceed with the application.
+  const timestamp = new Date()?.toISOString();
+  const ip = req?.ip || req?.connection?.remoteAddress;
+  console.log(`[${timestamp}] | ${ip} | ${req?.method} ${req?.path}`);
   next();
 });
 

@@ -21,6 +21,13 @@ services:
     ports:
       - "3003:3003"
 
+  chapterservice:
+    build:
+      context: ./backend-chapter
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+
   nextappservice:
     build:
       context: ./next-app
@@ -31,3 +38,4 @@ services:
       - courseservice
       - categoryservice
       - paymentservice
+      - chapterservice

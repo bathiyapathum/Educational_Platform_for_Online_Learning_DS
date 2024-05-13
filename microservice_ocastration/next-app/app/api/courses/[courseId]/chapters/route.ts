@@ -48,7 +48,7 @@ export async function POST(
     const newPosition = lastChapter ? lastChapter.position + 1 : 1;
 
     // Send a POST request to the backend server to create the chapter
-    const response = await axios.post("http://localhost:3004/api", {
+    const response = await axios.post("http://chapterservice:3004/api", {
       title,
       courseId: params.courseId,
       position: newPosition,
