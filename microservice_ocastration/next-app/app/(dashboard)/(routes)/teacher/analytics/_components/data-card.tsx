@@ -7,17 +7,11 @@ interface DataCardProps {
   shouldFormat?: boolean;
 }
 
-export const DataCard = ({
-  value,
-  label,
-  shouldFormat
-}: DataCardProps) => {
+export const DataCard = ({ value, label, shouldFormat }: DataCardProps) => {
   return (
-    <Card>
+    <Card className="bg-blue-50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
-          {label}
-        </CardTitle>
+        <CardTitle className="text-sm font-medium">{label}</CardTitle>
         <CardContent>
           <div className="text-2xl font-bold">
             {shouldFormat ? formatPrice(value) : value}
@@ -25,5 +19,5 @@ export const DataCard = ({
         </CardContent>
       </CardHeader>
     </Card>
-  )
-}
+  );
+};

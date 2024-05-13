@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { Trash } from "lucide-react";
 import axios from "axios";
@@ -15,18 +15,14 @@ interface ActionsProps {
   isPublished: boolean;
 }
 
-const Actions = ({
-  disabled,
-  courseId,
-  isPublished,
-}: ActionsProps) => {
+const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       if (isPublished) {
         await axios.patch(`/api/courses/${courseId}/unpublish`);
@@ -39,27 +35,27 @@ const Actions = ({
 
       router.refresh();
     } catch {
-      toast.error("Something went wrong.")
+      toast.error("Something went wrong.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const onDelete = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
-      await axios.delete(`/api/courses/${courseId}`)
+      await axios.delete(`/api/courses/${courseId}`);
 
       toast.success("Course deleted");
       router.refresh();
       router.push(`/teacher/courses`);
     } catch {
-      toast.error("Something went wrong.")
+      toast.error("Something went wrong.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex items-center gap-x-2">
@@ -69,17 +65,15 @@ const Actions = ({
         variant="outline"
         size="sm"
       >
-        {
-          isPublished ? "Unpublish" : "Publish"
-        }
+        {isPublished ? "Unpublish" : "Publish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={isLoading}>
+        <Button size="sm" disabled={isLoading} className="bg-blue-600">
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>
     </div>
   );
-}
+};
 
 export default Actions;
