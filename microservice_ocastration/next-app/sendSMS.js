@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 
 const accountSid = "AC08b0fbcae9e75ad8d0d79024306a1c2a";
 const authToken = "e490009023f317063ff5c2691e371223";
-// const client = twilio(accountSid, authToken);
+const client = twilio(accountSid, authToken);
 
 const sendSMS = async () => {
   const msgOptions = {
