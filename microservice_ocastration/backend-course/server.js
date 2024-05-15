@@ -56,8 +56,6 @@ async function sendSMSS() {
 }
 
 
-
-
 const sendEmail = async () => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
