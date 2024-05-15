@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api", async (req, res) => {
+app.get("/api/course", async (req, res) => {
   const { userId, title, categoryId } = req.query;
 
   try {
@@ -67,6 +67,32 @@ app.get("/api", async (req, res) => {
     );
 
     res.send(courseWithProgress);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/api/course/user/:id", async (req, res) => {
+  const userId = req.params.id;
+
+  console.log(userId);
+
+  if (!userId) {
+    return res.status(400).send("User ID is required");
+  }
+
+  try {
+    const courses = await db.course.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    res.send(courses);
+    console.log(courses);
   } catch (error) {
     console.log(error);
   }

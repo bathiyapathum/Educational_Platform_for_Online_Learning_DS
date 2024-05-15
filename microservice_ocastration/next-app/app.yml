@@ -1,45 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: courseservice-deployment
+  name: nextappservice-deployment
   labels:
-    app: courseservice
+    app: nextappservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: courseservice
+      app: nextappservice
   template:
     metadata:
       labels:
-        app: courseservice
+        app: nextappservice
     spec:
       containers:
-        - name: courseservice
-          image: it21177828/courseservice:latest
+        - name: nextappservice
+          image: it21177828/nextappservice:latest
           ports:
-            - containerPort: 3001
+            - containerPort: 3000
               hostPort: 80
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: course-secret
+                  name: app-secret
                   key: db-url
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: courseservice-service
+  name: nextappservice-service
 spec:
   type: NodePort
   selector:
-    app: courseservice
+    app: nextappservice
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3001
+      targetPort: 3000
       nodePort: 30011
 
 
