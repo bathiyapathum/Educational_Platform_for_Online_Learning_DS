@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
+//import db
 const db = require("./lib/Db.js");
 
 const { getProgress } = require("./lib/GetProgress.js");
@@ -15,6 +16,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+//get api for get catergories from db
 app.get("/api", async (req, res) => {
   try {
     const categories = await db.category.findMany({
@@ -28,6 +31,7 @@ app.get("/api", async (req, res) => {
   }
 });
 
+//start port
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

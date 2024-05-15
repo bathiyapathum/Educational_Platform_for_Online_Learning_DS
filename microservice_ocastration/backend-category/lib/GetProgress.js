@@ -1,5 +1,7 @@
 const db = require("./Db.js");
 
+
+// getprogress 
 const getProgress = async (userId, courseId) => {
   try {
     const publishedChapters = await db.chapter.findMany({

@@ -15,14 +15,23 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api", async (req, res) => {
-  const { userId, courseId } = req.query;
+//api endpoint
+// app.get("/api", async (req, res) => {
+//   const { userId, courseId } = req.query;
 
-  console.log("userId", userId);
-  console.log("courseId", courseId);
+//   console.log("userId", userId);
+//   console.log("courseId", courseId);
 
-  console.log("chapter");
-  const purchase = await db.purchase.findUnique({
+//   console.log("chapter");
+//   const purchase = await db.purchase.findUnique({
+  app.get("/api", async (req, res) => {
+    const { userId, courseId } = req.query;
+  
+    console.log("userId", userId);
+    console.log("courseId", courseId);
+  
+    console.log("chapter");
+    const purchase = await db.purchase.findUnique({
     where: {
       userId_courseId: {
         userId,
